@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import OTPForm from "../src/OTPForm.jsx";
 
 function App() {
   const [number, setNumber] = useState();
@@ -7,6 +8,11 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const regex = /[^0-9]/g;
+    if (number.length < 10 || regex.test(number)) {
+      alert("Invalid Phone Number");
+      return;
+    }
     console.log("OTP sent on", number);
     setShowOTPForm(true);
   };
@@ -27,6 +33,7 @@ function App() {
                 placeholder="Enter Phone Number"
                 value={number}
                 onChange={handlePhoneSUbmit}
+                className="numberInput"
               />
               <button type="submit">Send OTP</button>
             </form>
@@ -34,6 +41,7 @@ function App() {
         ) : (
           <div>
             <h1>Enter OTP</h1>
+            <OTPForm lenght={4} />
           </div>
         )}
       </div>
